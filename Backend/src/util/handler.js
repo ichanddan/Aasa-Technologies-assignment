@@ -2,49 +2,59 @@
  * Error Handling methods below
  *
  */
-
-const HandleSuccess = (res, data) => {
-  res.status(200).json(data);
-  res.end();
-};
-
-const HandleError = (res, message) => {
-  res.status(202).json({
-    error: message,
-  });
-  res.end();
-};
-
-const UnauthorizedError = (res) => {
-  res.status(401).json({
-    error: "Unauthorized API call.",
-  });
-  res.end();
-};
-
-const HandleServerError = (res, req, err) => {
-  /*
-   * Can log the error data into files to recreate and fix issue.
-   * Hiding stack stace from users.
-   */
-  const errLog = {
-    method: req.method,
-    url: req.originalUrl,
-    params: req.params,
-    query: req.query,
-    post: req.body,
-    error: err,
+/**
+ * Handles a successful API response
+ * @param {Object} res - Express response object
+ * @param {string} message - Response message
+ * @param {Object|Array} [data] - Optional data to be sent in the response
+ */
+const handleSuccess = (res, statusCode = 200, message, data = null) => {
+  const response = {
+    status: "success",
+    message,
   };
-  // Temporary console log for debug mode
-  console.log(errLog);
-  res.status(500).json({
-    error: "Something went wrong. Please contact support team.",
+
+  if (data !== null) {
+    response.data = data;
+  }
+
+  return res.status(statusCode).json(response);
+};
+
+/**
+ * Handles an error API response
+ * @param {Object} res - Express response object
+ * @param {number} statusCode - HTTP status code
+ * @param {string} message - Error message
+ */
+const handleError = (res, statusCode = 400, message) => {
+  return res.status(statusCode).json({
+    status: "error",
+    message,
+  });
+};
+const handleConflict = (res, statusCode = 409, message) => {
+  return res.status(statusCode).json({
+    status: "Conflict",
+    message,
+  });
+};
+
+/**
+ * Handles an internal server error API response
+ * @param {Object} res - Express response object
+ * @param {string} message - Error message
+ */
+const handleInternalServerError = (res, message = "Internal Server Error") => {
+  return res.status(500).json({
+    status: "error",
+    message,
   });
 };
 
 export default {
-  HandleSuccess,
-  HandleError,
-  UnauthorizedError,
-  HandleServerError,
+  handleSuccess,
+  handleError,
+  handleConflict,
+  handleInternalServerError,
 };

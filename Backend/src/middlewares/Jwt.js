@@ -21,4 +21,7 @@ const generateToken = (userData) => {
   return jwt.sign({ userData }, process.env.JWT_SECRET, { expiresIn: "1D" });
 };
 
-module.exports = { verifyToken, generateToken };
+export default {
+  verifyToken,
+  generateToken,
+};
