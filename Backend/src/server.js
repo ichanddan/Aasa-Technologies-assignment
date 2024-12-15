@@ -7,7 +7,11 @@ import dotenv from "dotenv";
 
 const app = express();
 const port = 3000 || process.env.PORT;
-app.use(cors());
+const corsOptions = {
+    origin: "http://localhost:5173",
+    credentials: true,
+  }
+app.use(cors(corsOptions));
 dotenv.config()
 
 app.use(bodyParser.json());
