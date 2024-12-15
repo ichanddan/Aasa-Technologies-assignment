@@ -1,11 +1,13 @@
 import Sequelize from "sequelize";
-import Users from './user.model.js'
+import Users from "./user.model.js";
+import dotenv from "dotenv";
+
+dotenv.config(); // Load environment variables from.env file
 
 const sequelizeInstance = new Sequelize(
-  "aasa-technologies-assignment",
-  "chandan",
-  "chandan083",
-
+  process.env.DB_NAME,
+  process.env.DB_USER,
+  process.env.DB_PASSWORD,
   {
     host: "localhost",
     dialect: "mysql",
