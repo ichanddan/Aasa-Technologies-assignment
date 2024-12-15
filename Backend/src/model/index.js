@@ -1,5 +1,6 @@
 import Sequelize from "sequelize";
 import Users from "./user.model.js";
+import SearchLog from "./sarchLog.model.js";
 import dotenv from "dotenv";
 
 dotenv.config(); // Load environment variables from.env file
@@ -35,5 +36,6 @@ db.sequelize = sequelizeInstance;
 db.Sequelize = Sequelize;
 
 db.User = Users(sequelizeInstance, Sequelize);
+db.SearchLog = SearchLog(sequelizeInstance, Sequelize);
 
 export default db;
