@@ -6,12 +6,12 @@ export default (sequelize, dataType) => {
         type: dataType.INTEGER,
         allowNull: false,
       },
-      city: {
+      cityName: {
         type: dataType.STRING,
         allowNull: false,
       },
       weatherInfo: {
-        type: dataType.STRING,
+        type: dataType.JSON,
         allowNull: false,
       },
     },

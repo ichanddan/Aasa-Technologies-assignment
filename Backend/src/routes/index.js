@@ -1,8 +1,10 @@
 import express from "express";
 import AuthRouter from "./AuthRouter.js";
+import SarchLogRouter from "./SarchLogRouter.js";
+import Jwt from "../middlewares/Jwt.js";
+
+
 const router = express.Router();
-
-
 router.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
@@ -24,6 +26,7 @@ router.get("/", (req, res) => {
 });
 
 router.use('/auth', AuthRouter)
+router.use('/wether',Jwt.verifyToken, SarchLogRouter)
 
 
 export default router;

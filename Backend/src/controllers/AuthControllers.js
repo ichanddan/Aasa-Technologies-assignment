@@ -34,7 +34,7 @@ const Login = async (req, res) => {
     if (!isValid) {
       handler.handleError(res, 400, "Invalid password");
     }
-    const token = await Jwt.generateToken(User.id);
+    const token = await Jwt.generateToken({id:User.id});
     return handler.handleSuccess(res, 200, "Signup Successfully...", {
       token,
       User,
