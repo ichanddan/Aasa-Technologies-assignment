@@ -18,9 +18,14 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/signup" element={<SignupPage />} />
-        <Route  element={<PrivateRoute />} >
-        <Route path="/profile" element={<ProfilePage />} />
-        </Route>
+        <Route
+          path="/profile"
+          element={
+            <PrivateRoute>
+              <ProfilePage /> {/* Protected route */}
+            </PrivateRoute>
+          }
+        />
       </Routes>
     </BrowserRouter>
   );

@@ -19,7 +19,7 @@ export default function AppNavbar() {
         </Link>
       </NavbarBrand>
       <NavbarContent justify="end">
-        {parsedData.token ? (
+        {parsedData?.token ? (
           <NavbarItem>
             <Link href="/profile">
               <Button color="primary" variant="ghost">

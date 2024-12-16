@@ -1,6 +1,6 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Input, Button, Card, CardBody, CardHeader } from "@nextui-org/react";
-import { handelSearchCity } from "../Api";
+import { handelGetWeatherData, handelSearchCity } from "../Api";
 import { toast } from "react-toastify";
 
 export default function WeatherSearch() {
@@ -28,6 +28,20 @@ export default function WeatherSearch() {
       toast.error(error.response.data.message);
     }
   };
+
+  const [weatherHistory, setweatherHistory] = useState([]);
+  const getData = localStorage.getItem("data");
+  const parsedData = JSON.parse(getData);
+
+  useEffect(() => {
+    const fetchWeatherHistory = async () => {
+      const res = await handelGetWeatherData();
+      const parsedData = res.data.data.map((item) => JSON.parse(item));
+      setweatherHistory(parsedData);
+    };
+    fetchWeatherHistory();
+  }, []);
+
   return (
     <div className="mt-10">
       <form onSubmit={handleSubmit} className="flex space-x-2">
@@ -65,6 +79,34 @@ export default function WeatherSearch() {
           </CardBody>
         </Card>
       )}
+      <h2 className="text-xl font-semibold my-5">Weather Search History</h2>
+      <div className="space-y-4">
+        {weatherHistory.map((item, index) => {
+          return (
+            <Card key={index} className="mt-5">
+              <CardHeader>
+                <div className="flex gap-2">
+                  <h2 className="text-xl font-bold">
+                    {item?.location?.name} - {item?.location?.region} -{" "}
+                    {item?.location?.country}
+                  </h2>
+                  <img
+                    className="rounded-xl"
+                    src={item?.current?.weather_icons[0]}
+                    height="18"
+                    width="20"
+                    alt="Weather Icon"
+                  />{" "}
+                </div>
+              </CardHeader>
+              <CardBody>
+                <p>Temperature: {item?.current?.temperature}°C</p>
+                <p>Time: {item?.current?.observation_time}</p>
+              </CardBody>
+            </Card>
+          );
+        })}
+      </div>
     </div>
   );
 }

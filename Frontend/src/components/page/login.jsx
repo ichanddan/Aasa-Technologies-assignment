@@ -23,13 +23,13 @@ export default function LoginPage() {
     e.preventDefault();
     try {
       const login = await handelLogin(formData);
-      console.log(formData);
-      console.log(login);
+
       if (login.status == 200) {
-        console.log(login);
-       await localStorage.setItem('data',JSON.stringify(login.data.data));
+        await localStorage.setItem("data", JSON.stringify(login.data.data));
         toast.success("login successful!");
-        navigator("/");
+        setTimeout(() => {
+          navigator("/");
+        }, 3000);
       }
     } catch (error) {
       console.log(error);
