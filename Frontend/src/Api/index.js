@@ -1,10 +1,13 @@
 import axios from "axios";
 const BaseUrl = "http://localhost:3000/api";
 
-const { token } = localStorage.getItem("data");
+const data = localStorage.getItem("data");
+const parsedData = JSON.parse(data); 
+const token = parsedData?.token;
 let config = {
   headers: {
-    Authorization: "Bearer " + token,
+    Authorization: `Bearer ${token}`,
+    "Content-Type": "application/json",
   },
 };
 

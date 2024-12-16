@@ -9,6 +9,8 @@ import {
 
 export default function AppNavbar() {
   const getData = localStorage.getItem("data");
+  const parsedData = JSON.parse(getData); 
+
   return (
     <Navbar>
       <NavbarBrand>
@@ -17,7 +19,16 @@ export default function AppNavbar() {
         </Link>
       </NavbarBrand>
       <NavbarContent justify="end">
-        {getData.token ? (
+        {parsedData.token ? (
+          <NavbarItem>
+            <Link href="/profile">
+              <Button color="primary" variant="ghost">
+                Profile
+              </Button>
+            </Link>
+          </NavbarItem>
+          
+        ) : (
           <>
             <NavbarItem>
               <Link href="/login">
@@ -34,14 +45,6 @@ export default function AppNavbar() {
               </Link>
             </NavbarItem>
           </>
-        ) : (
-          <NavbarItem>
-            <Link href="/profile">
-              <Button color="primary" variant="ghost">
-                Profile
-              </Button>
-            </Link>
-          </NavbarItem>
         )}
       </NavbarContent>
     </Navbar>
