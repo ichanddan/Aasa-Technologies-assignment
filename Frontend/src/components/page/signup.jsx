@@ -2,8 +2,9 @@ import { Button, Input, Card, CardBody, CardHeader } from "@nextui-org/react";
 import { useState } from "react";
 import { handelSignup } from "../../Api";
 import { toast } from "react-toastify";
-
+import { useNavigate } from "react-router-dom";
 export default function SignupPage() {
+  const navigator =  useNavigate()
   const [formData, setFormData] = useState({
     Name: "",
     Email: "",
@@ -24,6 +25,7 @@ export default function SignupPage() {
 
       if (signup.status == 200) {
         toast.success("Signup successful!");
+        navigator('/login')
       }
     } catch (error) {
       console.log(error)
