@@ -1,6 +1,14 @@
-import { Navbar, NavbarBrand, NavbarContent, NavbarItem, Link, Button } from "@nextui-org/react"
+import {
+  Navbar,
+  NavbarBrand,
+  NavbarContent,
+  NavbarItem,
+  Link,
+  Button,
+} from "@nextui-org/react";
 
 export default function AppNavbar() {
+  const getData = localStorage.getItem("data");
   return (
     <Navbar>
       <NavbarBrand>
@@ -9,23 +17,33 @@ export default function AppNavbar() {
         </Link>
       </NavbarBrand>
       <NavbarContent justify="end">
-        <NavbarItem>
-          <Link href="/login">
-            <Button color="primary" variant="flat">Login</Button>
-          </Link>
-        </NavbarItem>
-        <NavbarItem>
-          <Link href="/signup">
-            <Button color="primary" variant="solid">Sign Up</Button>
-          </Link>
-        </NavbarItem>
-        <NavbarItem>
-          <Link href="/profile">
-            <Button color="primary" variant="ghost">Profile</Button>
-          </Link>
-        </NavbarItem>
+        {getData.token ? (
+          <>
+            <NavbarItem>
+              <Link href="/login">
+                <Button color="primary" variant="flat">
+                  Login
+                </Button>
+              </Link>
+            </NavbarItem>
+            <NavbarItem>
+              <Link href="/signup">
+                <Button color="primary" variant="solid">
+                  Sign Up
+                </Button>
+              </Link>
+            </NavbarItem>
+          </>
+        ) : (
+          <NavbarItem>
+            <Link href="/profile">
+              <Button color="primary" variant="ghost">
+                Profile
+              </Button>
+            </Link>
+          </NavbarItem>
+        )}
       </NavbarContent>
     </Navbar>
-  )
+  );
 }
-
