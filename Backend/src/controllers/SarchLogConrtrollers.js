@@ -8,10 +8,16 @@ const Search = async (req, res) => {
     const apiKey = process.env.WEATHER_API_KEY;
     const apiUrl = `http://api.weatherstack.com/current?access_key=${apiKey}&query=${City}`;
     const data = await fetch(apiUrl);
+    console.log(data);
     const weatherData = await data.json();
+    console.log(weatherData, 'weather')
     if (!weatherData) {
       return handler.handleError(res, 404, "Wether not found");
+    } else if(weatherData.error.code ==615){
+      return handler.handleError(res, 215, "invalid request");
+      
     }
+
     const insertDb = await db.SearchLog.create({
       userId: req.user.id,
       cityName: City,
@@ -35,9 +41,6 @@ const AllData = async (req, res) => {
   try {
     let weatherData = [];
     const getData = await db.SearchLog.findAll({
-      where: {
-        userId: req.user.id,
-      },
       order: [["createdAt", "DESC"]],
     });
     if (getData.length > 0) {

@@ -22,6 +22,8 @@ export default function WeatherSearch() {
       setWeather(SearchWeather.data.data);
       if (SearchWeather.status == 200) {
         toast.success("your weather");
+      } else if (SearchWeather.status == 215) {
+        toast.error(SearchWeather.data.message);
       }
     } catch (error) {
       console.log(error);

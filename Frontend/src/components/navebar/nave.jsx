@@ -6,11 +6,19 @@ import {
   Link,
   Button,
 } from "@nextui-org/react";
+import { useEffect, useState } from "react";
 
 export default function AppNavbar() {
-  const getData = localStorage.getItem("data");
-  const parsedData = JSON.parse(getData); 
+  const [token, setToken] = useState(null);
 
+  useEffect(() => {
+    const tokenData = () => {
+      const getData = localStorage.getItem("data");
+      const parsedData = JSON.parse(getData);
+      setToken(parsedData?.token);
+    };
+    tokenData()
+  }, [token]);
   return (
     <Navbar>
       <NavbarBrand>
@@ -19,7 +27,7 @@ export default function AppNavbar() {
         </Link>
       </NavbarBrand>
       <NavbarContent justify="end">
-        {parsedData?.token ? (
+        {token ? (
           <NavbarItem>
             <Link href="/profile">
               <Button color="primary" variant="ghost">
@@ -27,7 +35,6 @@ export default function AppNavbar() {
               </Button>
             </Link>
           </NavbarItem>
-          
         ) : (
           <>
             <NavbarItem>
